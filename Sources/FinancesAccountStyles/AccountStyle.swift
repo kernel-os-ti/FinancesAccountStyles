@@ -16,6 +16,11 @@ public protocol AccountStyle {
 }
 
 public enum AccountStyles: String, CaseIterable, Identifiable {
+    
+    public static func style(for code: String) -> AccountStyle {
+        AccountStyles(rawValue: code)!.style
+    }
+    
     public var id: String {
         self.rawValue
     }
@@ -34,6 +39,11 @@ public enum AccountStyles: String, CaseIterable, Identifiable {
     case nubank
     case bradesco
     case c6bank, c6usd, c6eur
+    
+    //CreditCards
+    case purpleCC, redCC
+    case masterStandardCC, masterPlatinumCC, masterGoldCC, masterBlackCC
+    case visaClassicCC, visaGoldCC, visaPlatinumCC, visaIniniteCC, visaSignatureCC
     
     var style: AccountStyle {
         switch self {
@@ -81,6 +91,28 @@ public enum AccountStyles: String, CaseIterable, Identifiable {
             return C6GlobalUSDAccountStyle()
         case .c6eur:
             return C6GlobalEURAccountStyle()
+        case .purpleCC:
+            return PurpleCardCreditCardStyle()
+        case .redCC:
+            return RedCardCreditCardStyle()
+        case .masterStandardCC:
+            return MastercardStandardCCStyle()
+        case .masterGoldCC:
+            return MastercardGoldCCStyle()
+        case .masterPlatinumCC:
+            return MastercardPlatinumCCStyle()
+        case .masterBlackCC:
+            return MastercardBlackCCStyle()
+        case .visaClassicCC:
+            return VisaClassicCCStyle()
+        case .visaGoldCC:
+            return VisaGoldCCStyle()
+        case .visaPlatinumCC:
+            return VisaPlatinumCCStyle()
+        case .visaSignatureCC:
+            return VisaSignatureCCStyle()
+        case .visaIniniteCC:
+            return VisaInfiniteCCStyle()
         }
     }
 }
@@ -101,5 +133,18 @@ public enum AccountStyles: String, CaseIterable, Identifiable {
             Label("Asset Accounts", systemImage: "wallet")
         }
 
+        Tab {
+            List {
+                ForEach(AccountStyles.allCases.filter { $0.type == .creditCard }) { accountStyle in
+                    VStack {
+                        StylePreviewView(style: accountStyle.style)
+                        SmallStylePreviewView(style: accountStyle.style)
+                    }
+                }
+            }
+            .listStyle(.plain)
+        } label: {
+            Label("Credit Card", systemImage: "wallet")
+        }
     }
 }
