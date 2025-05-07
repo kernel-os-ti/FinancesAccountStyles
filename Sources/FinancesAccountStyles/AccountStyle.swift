@@ -45,7 +45,7 @@ public enum AccountStyles: String, CaseIterable, Identifiable {
     case masterStandardCC, masterPlatinumCC, masterGoldCC, masterBlackCC
     case visaClassicCC, visaGoldCC, visaPlatinumCC, visaIniniteCC, visaSignatureCC
     
-    var style: AccountStyle {
+    public var style: AccountStyle {
         switch self {
         case .classicBlue:
             return ClassicBlueAssetAccountStyle()
