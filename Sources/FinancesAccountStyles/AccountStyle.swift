@@ -18,7 +18,7 @@ public protocol AccountStyle {
 public enum AccountStyles: String, CaseIterable, Identifiable {
     
     public static func style(for code: String) -> AccountStyle {
-        AccountStyles(rawValue: code)!.style
+        AccountStyles(rawValue: code)?.style ?? AccountStyles.emeraldGreen.style
     }
     
     public var id: String {
